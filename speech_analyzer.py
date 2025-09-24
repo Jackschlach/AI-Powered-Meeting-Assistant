@@ -2,7 +2,7 @@ import torch
 import os
 import gradio as gr
 
-#from langchain.llms import OpenAI
+
 from langchain.llms import HuggingFaceHub
 
 from transformers import pipeline
@@ -18,7 +18,7 @@ my_credentials = {
 }
 params = {
         GenParams.MAX_NEW_TOKENS: 800, # The maximum number of tokens that the model can generate in a single run.
-        GenParams.TEMPERATURE: 0.1,   # A parameter that controls the randomness of the token generation. A lower value makes the generation more deterministic, while a higher value introduces more randomness.
+        GenParams.TEMPERATURE: 0.1,   # A parameter that controls the randomness of the token generation. 
     }
 
 LLAMA2_model = Model(
@@ -30,7 +30,6 @@ LLAMA2_model = Model(
 
 llm = WatsonxLLM(LLAMA2_model)  
 
-#######------------- Prompt Template-------------####
 
 temp = """
 <s><<SYS>>
@@ -45,7 +44,6 @@ pt = PromptTemplate(
 
 prompt_to_LLAMA2 = LLMChain(llm=llm, prompt=pt)
 
-#######------------- Speech2text-------------####
 
 def transcript_audio(audio_file):
     # Initialize the speech recognition pipeline
@@ -60,7 +58,6 @@ def transcript_audio(audio_file):
 
     return result
 
-#######------------- Gradio-------------####
 
 audio_input = gr.Audio(sources="upload", type="filepath")
 output_text = gr.Textbox()
